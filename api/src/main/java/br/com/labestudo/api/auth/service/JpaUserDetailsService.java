@@ -23,7 +23,7 @@ public class JpaUserDetailsService implements UserDetailsService {
 		var user = userRepository.findByEmailAndActive(email, Boolean.TRUE)
 				.orElseThrow(() -> new RuntimeException("Usuário ou senha inválida"));
 		
-		return new AuthUser(user, Arrays.asList(new SimpleGrantedAuthority("".toUpperCase())));
+		return new AuthUser(user, Arrays.asList(new SimpleGrantedAuthority("ADMIN".toUpperCase())));
 	}
 
 }

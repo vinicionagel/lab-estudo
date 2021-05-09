@@ -2,6 +2,7 @@ package br.com.labestudo.api.auth.model.entity;
 
 import java.time.OffsetDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +16,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
 	
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -34,6 +36,6 @@ public class User {
 	private OffsetDateTime created;
 	
 	@UpdateTimestamp
-	private OffsetDateTime updated; 
-
+	private OffsetDateTime updated;
+	
 }
