@@ -25,5 +25,4 @@ public class JpaUserDetailsService implements UserDetailsService {
 		
 		return new AuthUser(user, Arrays.asList(new SimpleGrantedAuthority("ADMIN".toUpperCase())));
 	}
-
 }
