@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 import br.com.labestudo.api.auth.properties.JwtKeyStoreProperties;
 import br.com.labestudo.api.auth.service.JpaUserDetailsService;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -35,17 +37,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Autowired
 	private JwtKeyStoreProperties jwtKeyStoreProperties;
+
+	@Autowired
+	private DataSource dataSource;
 	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients
-			.inMemory()
-				.withClient("app")
-				.secret(passwordEncoder.encode("app#2021"))
-				.authorizedGrantTypes("password", "refresh_token")
-				.scopes("WRITE", "READ")
-				.accessTokenValiditySeconds(60 * 60 * 1)
-				.refreshTokenValiditySeconds(60 * 60 * 24);
+		clients.jdbc(dataSource);
 	}
 
 	@Override
