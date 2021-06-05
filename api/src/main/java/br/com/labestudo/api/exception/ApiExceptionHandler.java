@@ -27,7 +27,7 @@ import java.util.List;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

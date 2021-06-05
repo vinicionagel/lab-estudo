@@ -18,6 +18,7 @@ public class UserDto implements Serializable {
     @Email
     private String email;
 
+    @NotNull
     private String pass;
 
 }

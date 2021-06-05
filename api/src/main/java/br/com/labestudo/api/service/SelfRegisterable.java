@@ -11,7 +11,7 @@ public abstract class SelfRegisterable {
         verifyIfRegistered(userDto.getEmail());
         verifyPass(userDto.getPass());
         encryptPass(userDto);
-        SelfRegisterUser selfRegisterUser = create(userDto);
+        var selfRegisterUser = create(userDto);
         sendValidation(selfRegisterUser);
     }
 
