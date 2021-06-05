@@ -1,14 +1,17 @@
 package br.com.labestudo.api.model.dto;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
+import lombok.Data;
 
 @Data
 public class UserDto implements Serializable {
 
-    @NotNull
-    private String name;
+	private static final long serialVersionUID = 1L;
+
+	@NotNull
+	private String name;
 
 }
