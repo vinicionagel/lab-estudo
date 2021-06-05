@@ -1,5 +1,6 @@
 package br.com.labestudo.api.controller;
 
+import br.com.labestudo.api.exception.PassValidationException;
 import br.com.labestudo.api.exception.UserRegisteredException;
 import br.com.labestudo.api.model.dto.UserDto;
 import br.com.labestudo.api.service.SelfRegisterService;
@@ -18,11 +19,10 @@ import javax.validation.Valid;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class SelfRegisterController {
 
-    private SelfRegisterService selfRegisterService;
-
+    private final SelfRegisterService selfRegisterService;
 
     @PutMapping()
-    public ResponseEntity<String> add(@RequestBody @Valid UserDto userDto) throws UserRegisteredException {
+    public ResponseEntity<String> add(@RequestBody @Valid UserDto userDto) throws UserRegisteredException, PassValidationException {
         selfRegisterService.selfRegister(userDto);
         return ResponseEntity.ok(userDto.getName());
     }

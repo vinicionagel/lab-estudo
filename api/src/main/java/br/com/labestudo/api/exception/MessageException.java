@@ -1,6 +1,5 @@
 package br.com.labestudo.api.exception;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

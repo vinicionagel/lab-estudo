@@ -4,6 +4,7 @@ import br.com.labestudo.api.model.dto.ErrorDto;
 import br.com.labestudo.api.model.dto.ErrorsDto;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @ControllerAdvice
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @Autowired
     private MessageSource messageSource;
 
     @Override
@@ -41,9 +44,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(MessageException.class)
     public ResponseEntity<Object> handleMessagesException(MessageException ex, WebRequest request) {
-        String message = messageSource.getMessage(ex.getKey(), ex.getArgs(), LocaleContextHolder.getLocale());
+        var message = messageSource.getMessage(ex.getKey(), ex.getArgs(), LocaleContextHolder.getLocale());
         var errorsDto = new ErrorsDto();
         errorsDto.setErrors(Collections.singletonList(new ErrorDto(message)));
+        return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(MessagesException.class)
+    public ResponseEntity<Object> handleMessagesException(MessagesException ex, WebRequest request) {
+        List<ErrorDto> listErrorDto = new ArrayList<>();
+        ex.getMessagesErrorDtoList().forEach(messagesErrorDto ->
+                listErrorDto.add(new ErrorDto(messageSource.getMessage(messagesErrorDto.getKey(), messagesErrorDto.getArgs(), LocaleContextHolder.getLocale()))));
+        var errorsDto = new ErrorsDto();
+        errorsDto.setErrors(listErrorDto);
         return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
