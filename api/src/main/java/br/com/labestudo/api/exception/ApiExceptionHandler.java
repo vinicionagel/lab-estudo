@@ -14,8 +14,11 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.util.Collections;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -25,7 +28,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        ErrorsDto errorsDto = new ErrorsDto();
+        var errorsDto = new ErrorsDto();
         ex.getBindingResult().getAllErrors().forEach(objectError -> errorsDto.getErrors().add(montarError(objectError)));
         return handleExceptionInternal(ex, errorsDto, headers, status, request);
     }
@@ -34,6 +37,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         InvalidFormatException cause = (InvalidFormatException) ex.getCause();
         return handleExceptionInternal(ex, new ErrorDto(messageSource.getMessage("message.invalid", new String[]{cause.getPath().stream().findFirst().map(JsonMappingException.Reference::getFieldName).orElse("")}, LocaleContextHolder.getLocale())), headers, status, request);
+    }
+
+    @ExceptionHandler(MessageException.class)
+    public ResponseEntity<Object> handleMessagesException(MessageException ex, WebRequest request) {
+        String message = messageSource.getMessage(ex.getKey(), ex.getArgs(), LocaleContextHolder.getLocale());
+        var errorsDto = new ErrorsDto();
+        errorsDto.setErrors(Collections.singletonList(new ErrorDto(message)));
+        return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     private ErrorDto montarError(ObjectError objectError) {
