@@ -10,6 +10,7 @@ import br.com.labestudo.api.auth.model.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByEmailAndActive(String email, Boolean true1);
+	Optional<User> findByEmailAndActive(String email, Boolean ativo);
 
+    Optional<User> findByEmail(String email);
 }
