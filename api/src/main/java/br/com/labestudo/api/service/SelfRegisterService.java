@@ -47,6 +47,5 @@ public class SelfRegisterService extends SelfRegisterable {
 
     @Override
     protected void sendValidation(SelfRegisterUser selfRegisterUser) {
-
     }
 }

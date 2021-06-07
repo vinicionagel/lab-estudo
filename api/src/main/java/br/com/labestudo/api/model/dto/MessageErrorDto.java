@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MessagesErrorDto {
+public class MessageErrorDto {
 
     private String key;
     private String[] args;

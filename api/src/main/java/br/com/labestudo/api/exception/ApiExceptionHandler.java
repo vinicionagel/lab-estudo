@@ -53,7 +53,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MessagesException.class)
     public ResponseEntity<Object> handleMessagesException(MessagesException ex, WebRequest request) {
         List<ErrorDto> listErrorDto = new ArrayList<>();
-        ex.getMessagesErrorDtoList().forEach(messagesErrorDto ->
+        ex.getMessageErrorDtoList().forEach(messagesErrorDto ->
                 listErrorDto.add(new ErrorDto(messageSource.getMessage(messagesErrorDto.getKey(), messagesErrorDto.getArgs(), LocaleContextHolder.getLocale()))));
         var errorsDto = new ErrorsDto();
         errorsDto.setErrors(listErrorDto);

@@ -1,6 +1,6 @@
 package br.com.labestudo.api.exception;
 
-import br.com.labestudo.api.model.dto.MessagesErrorDto;
+import br.com.labestudo.api.model.dto.MessageErrorDto;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -8,10 +8,10 @@ import java.util.Collection;
 @Getter
 public class MessagesException extends Exception {
 
-    private Collection<MessagesErrorDto> messagesErrorDtoList;
+    private Collection<MessageErrorDto> messageErrorDtoList;
 
-    public MessagesException(Collection<MessagesErrorDto> messagesErrorDtoList) {
-        this.messagesErrorDtoList = messagesErrorDtoList;
+    public MessagesException(Collection<MessageErrorDto> messageErrorDtoList) {
+        this.messageErrorDtoList = messageErrorDtoList;
     }
 
 }
