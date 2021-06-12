@@ -2,6 +2,7 @@ package br.com.labestudo.api.auth.service;
 
 import java.util.Arrays;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,10 @@ import br.com.labestudo.api.auth.model.AuthUser;
 import br.com.labestudo.api.auth.repository.UserRepository;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JpaUserDetailsService implements UserDetailsService {
-	
-	@Autowired
-	private UserRepository userRepository;
+
+	private final UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

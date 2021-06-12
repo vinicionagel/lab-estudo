@@ -1,13 +1,12 @@
 package br.com.labestudo.api.exception;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
 public class MessageException extends Exception {
 
-    private String key;
-    private String[] args;
+    private final String key;
+    private final String[] args;
 
     public MessageException(String key, String... args) {
         this.key = key;

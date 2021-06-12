@@ -1,7 +1,8 @@
 package br.com.labestudo.api.auth.config;
 
-import javax.sql.DataSource;
-
+import br.com.labestudo.api.auth.properties.JwtKeyStoreProperties;
+import br.com.labestudo.api.auth.service.JpaUserDetailsService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,23 +19,19 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
-import br.com.labestudo.api.auth.properties.JwtKeyStoreProperties;
-import br.com.labestudo.api.auth.service.JpaUserDetailsService;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableAuthorizationServer
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
-	@Autowired
-	private JpaUserDetailsService userDetailsService;
+	private final JpaUserDetailsService userDetailsService;
 
-	@Autowired
-	private JwtKeyStoreProperties jwtKeyStoreProperties;
+	private final JwtKeyStoreProperties jwtKeyStoreProperties;
 
-	@Autowired
 	private DataSource dataSource;
 
 	@Override
