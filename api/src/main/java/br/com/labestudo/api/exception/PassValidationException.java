@@ -1,12 +1,14 @@
 package br.com.labestudo.api.exception;
 
-import br.com.labestudo.api.model.dto.MessageErrorDto;
-
 import java.util.Collection;
+
+import br.com.labestudo.api.model.dto.MessageErrorDto;
 
 public class PassValidationException extends MessagesException {
 
-    public PassValidationException(Collection<MessageErrorDto> messageErrorDtoList) {
-        super(messageErrorDtoList);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public PassValidationException(Collection<MessageErrorDto> messageErrorDtoList) {
+		super(messageErrorDtoList);
+	}
 }

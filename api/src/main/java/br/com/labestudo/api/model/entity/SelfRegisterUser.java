@@ -1,30 +1,40 @@
 package br.com.labestudo.api.model.entity;
 
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "self_register_user")
 @Data
 public class SelfRegisterUser implements Serializable {
 
-    @Id
-    private String id;
+	private static final long serialVersionUID = 1L;
 
-    private String name;
+	@Id
+	private String id;
 
-    private String email;
+	private String name;
 
-    private String pass;
+	private String email;
 
-    @Column(name = "user_hash")
-    private String userHash;
+	private String pass;
 
-    @CreationTimestamp
-    private LocalDateTime created;
+	@CreationTimestamp
+	private OffsetDateTime created;
 
+	@UpdateTimestamp
+	private OffsetDateTime updated;
+
+	@Version
+	private Integer version;
 }

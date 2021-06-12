@@ -1,26 +1,32 @@
 package br.com.labestudo.api.model.entity;
 
-import lombok.Data;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.Data;
 
 @Entity
 @Table(name = "parameter")
 @Data
 public class Parameter implements Serializable {
 
-    @Id
-    private String key;
+	private static final long serialVersionUID = 1L;
 
-    private String value;
+	@Id
+	private String key;
 
-    @CreationTimestamp
-    private LocalDateTime created;
+	private String value;
 
-    @UpdateTimestamp
-    private LocalDateTime updated;
+	@CreationTimestamp
+	private LocalDateTime created;
+
+	@UpdateTimestamp
+	private LocalDateTime updated;
 }

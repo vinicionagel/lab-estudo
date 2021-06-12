@@ -1,0 +1,3 @@
+ALTER TABLE self_register_user
+ADD COLUMN updated TIMESTAMP,
+ADD COLUMN version INTEGER NOT NULL;

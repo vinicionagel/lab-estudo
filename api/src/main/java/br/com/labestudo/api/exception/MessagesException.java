@@ -1,17 +1,19 @@
 package br.com.labestudo.api.exception;
 
+import java.util.Collection;
+
 import br.com.labestudo.api.model.dto.MessageErrorDto;
 import lombok.Getter;
-
-import java.util.Collection;
 
 @Getter
 public class MessagesException extends Exception {
 
-    private Collection<MessageErrorDto> messageErrorDtoList;
+	private static final long serialVersionUID = 1L;
 
-    public MessagesException(Collection<MessageErrorDto> messageErrorDtoList) {
-        this.messageErrorDtoList = messageErrorDtoList;
-    }
+	private Collection<MessageErrorDto> messageErrorDtoList;
+
+	public MessagesException(Collection<MessageErrorDto> messageErrorDtoList) {
+		this.messageErrorDtoList = messageErrorDtoList;
+	}
 
 }
