@@ -2,6 +2,7 @@ package br.com.labestudo.api.service;
 
 import br.com.labestudo.api.exception.PassValidationException;
 import br.com.labestudo.api.model.dto.MessageErrorDto;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
 @Service
+@Scope("singleton")
 public class PassFlowVerifyService {
 
     public void verifyPass(String pass) throws PassValidationException {
@@ -24,9 +26,9 @@ public class PassFlowVerifyService {
             containsUpperCase(character, containsUpperCase);
             containsLowerCase(character, contaisLowerCase);
         });
-        addErrorMessage(messageErrorDtoList, contaisNumber.get(), new MessageErrorDto("pass.noContainsNumber", null));
-        addErrorMessage(messageErrorDtoList, containsUpperCase.get(), new MessageErrorDto("pass.noContainsUpperCase", null));
-        addErrorMessage(messageErrorDtoList, contaisLowerCase.get(), new MessageErrorDto("pass.noContainsLowerCase", null));
+        addErrorMessage(messageErrorDtoList, contaisNumber.get(), new MessageErrorDto("pass.containsNumber.invalid", null));
+        addErrorMessage(messageErrorDtoList, containsUpperCase.get(), new MessageErrorDto("pass.containsUpperCase.invalid", null));
+        addErrorMessage(messageErrorDtoList, contaisLowerCase.get(), new MessageErrorDto("pass.containsLowerCase.invalid", null));
         if (!messageErrorDtoList.isEmpty()) {
             throw new PassValidationException(messageErrorDtoList);
         }
