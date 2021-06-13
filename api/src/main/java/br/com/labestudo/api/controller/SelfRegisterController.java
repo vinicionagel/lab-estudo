@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController()
 @RequestMapping("/selfregister")
@@ -24,7 +25,7 @@ public class SelfRegisterController {
     @PutMapping()
     public ResponseEntity<String> add(@RequestBody @Valid UserDto userDto) throws UserRegisteredException, PassValidationException {
         selfRegisterService.selfRegister(userDto);
-        return ResponseEntity.ok(userDto.getName());
+        return ResponseEntity.created(URI.create("/selfregister/" + userDto.getName())).build();
     }
 
 }

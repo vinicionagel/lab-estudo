@@ -11,3 +11,19 @@ username=admin@admin.org&password=123456&grant_type=password
 ### Authorization by token, part 2. Use token to authorize.
 GET http://{{url}}/user
 Authorization: Bearer {{auth_token}}
+
+### test self register put OK
+PUT http://{{url}}/selfregister
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{ "name":"batata","email":"vinicio@gmail.com","pass":"aaBB123" }
+
+### test self register error password register
+PUT http://{{url}}/selfregister
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{ "name":"viniTest","email":"vinicio@gmail.com","pass":"--" }
+
+
