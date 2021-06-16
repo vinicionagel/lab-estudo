@@ -45,7 +45,7 @@ class SelfRegisterControllerTest {
     @Test
     void whenPUTIsCalledThenASelfRegisterUserIsCreated() throws Exception {
         // given
-        UserDto userDto = SelfRegisterFixture.validUserDto();
+        var userDto = SelfRegisterFixture.validUserDto();
         // when
         when(selfRegisterService.selfRegister(userDto)).thenReturn(userDto);
         // then
@@ -58,7 +58,7 @@ class SelfRegisterControllerTest {
     @Test
     void whenPutIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
         // given
-        UserDto userDto = SelfRegisterFixture.emptyUserDto();
+        var userDto = SelfRegisterFixture.emptyUserDto();
         // then
         mockMvc.perform(put(SELF_REGISTER_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ class SelfRegisterControllerTest {
     @Test
     void whenPutIsCalledWithWrongEmailThenAnErrorIsReturned() throws Exception {
         // given
-        UserDto userDto = SelfRegisterFixture.invalidEmailUserDto();
+        var userDto = SelfRegisterFixture.invalidEmailUserDto();
         // then
         mockMvc.perform(put(SELF_REGISTER_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
