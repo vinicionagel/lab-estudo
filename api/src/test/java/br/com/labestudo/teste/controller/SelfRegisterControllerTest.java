@@ -3,6 +3,7 @@ package br.com.labestudo.teste.controller;
 import br.com.labestudo.api.controller.SelfRegisterController;
 import br.com.labestudo.api.model.dto.UserDto;
 import br.com.labestudo.api.service.SelfRegisterService;
+import br.com.labestudo.teste.fixture.SelfRegisterFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import static br.com.labestudo.teste.util.JsonConvertionUtils.asJsonString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,19 +45,36 @@ class SelfRegisterControllerTest {
     @Test
     void whenPUTIsCalledThenASelfRegisterUserIsCreated() throws Exception {
         // given
-        UserDto userDto = new UserDto();
-        userDto.setName("adsada");
-        userDto.setPass("12345Zz");
-        userDto.setEmail("vinicionagel@gmail.com");
-
+        UserDto userDto = SelfRegisterFixture.validUserDto();
         // when
         when(selfRegisterService.selfRegister(userDto)).thenReturn(userDto);
-
         // then
         mockMvc.perform(put(SELF_REGISTER_API_URL_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userDto)))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void whenPutIsCalledWithoutRequiredFieldThenAnErrorIsReturned() throws Exception {
+        // given
+        UserDto userDto = SelfRegisterFixture.emptyUserDto();
+        // then
+        mockMvc.perform(put(SELF_REGISTER_API_URL_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userDto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenPutIsCalledWithWrongEmailThenAnErrorIsReturned() throws Exception {
+        // given
+        UserDto userDto = SelfRegisterFixture.invalidEmailUserDto();
+        // then
+        mockMvc.perform(put(SELF_REGISTER_API_URL_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userDto)))
+                .andExpect(status().isBadRequest());
     }
 
 }
