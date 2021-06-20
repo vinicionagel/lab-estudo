@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PassFlowVerifyServiceTest {
 
-    private PassFlowVerifyService passFlowVerifyService = new PassFlowVerifyService();
+    private final PassFlowVerifyService passFlowVerifyService = new PassFlowVerifyService();
 
     @ParameterizedTest(name = "Pass: {0}")
     @ValueSource(strings = {"aaBB12-", "1234zZ-@", "1234zZ@1", "1234zZ@1"})
@@ -20,10 +20,10 @@ class PassFlowVerifyServiceTest {
         assertDoesNotThrow(() -> passFlowVerifyService.verifyPass(pass));
     }
 
-    @ParameterizedTest(name = "Senha inválida: {0}")
+    @ParameterizedTest(name = "Invalid pass: {0}")
     @ValueSource(strings = {"aabb12", "1234zz", "1234zz@1", "---@", "@@@[]12", ""})
-    void WhenPassLenghtInvalid_ThenPassValidationException(String pass) {
-        PassValidationException passValidationException = assertThrows(
+    void WhenPassInvalid_ThenPassValidationException(String pass) {
+        var passValidationException = assertThrows(
                 PassValidationException.class,
                 () -> passFlowVerifyService.verifyPass(pass)
         );

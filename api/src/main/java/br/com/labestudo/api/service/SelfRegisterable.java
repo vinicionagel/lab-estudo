@@ -7,12 +7,13 @@ import br.com.labestudo.api.model.entity.SelfRegisterUser;
 
 public abstract class SelfRegisterable {
 
-    public void selfRegister(UserDto userDto) throws UserRegisteredException, PassValidationException {
+    public UserDto selfRegister(UserDto userDto) throws UserRegisteredException, PassValidationException {
         verifyIfRegistered(userDto.getEmail());
         verifyPass(userDto.getPass());
         encryptPass(userDto);
         var selfRegisterUser = create(userDto);
         sendValidation(selfRegisterUser);
+        return userDto;
     }
 
     protected abstract void verifyIfRegistered(String email) throws UserRegisteredException;

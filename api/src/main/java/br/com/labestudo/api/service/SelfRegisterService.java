@@ -49,7 +49,7 @@ public class SelfRegisterService extends SelfRegisterable {
 
 	@Override
 	protected SelfRegisterUser create(UserDto userDto) {
-		SelfRegisterUser newRegister = selfRegisterUserMapper.toSelfRegisterUser(userDto);
+		var newRegister = selfRegisterUserMapper.toSelfRegisterUser(userDto);
 		Optional<SelfRegisterUser> optOldRegister = selfRegisterRepository.findByEmail(newRegister.getEmail());
 		if (optOldRegister.isPresent()) {
 			SelfRegisterUser oldRegister = optOldRegister.get();
