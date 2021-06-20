@@ -16,7 +16,7 @@ Authorization: Bearer {{auth_token}}
 PUT http://{{url}}/selfregister
 Content-Type: application/json
 
-{ "name":"batata","email":"vinicio@gmail.com","pass":"aaBB123" }
+{ "name":"batata","email":"emerson.torres.tec@gmail.com","pass":"aaBB123" }
 
 ### test self register error password register
 PUT http://{{url}}/selfregister
@@ -24,4 +24,16 @@ Content-Type: application/json
 
 { "name":"viniTest","email":"vinicio@gmail.com","pass":"--" }
 
+### test self register error
+POST http://{{url}}/selfregister
+Content-Type: application/json
+
+{ "hash":"teste"}
+
+
+### test self register error
+POST http://{{url}}/selfregister
+Content-Type: application/json
+
+{ "hash":"cf6456d7-6572-4344-a46b-458fff864fa5"}
 

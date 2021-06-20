@@ -30,7 +30,7 @@ public class User {
 	
 	private String pass;
 	
-	private Boolean active;
+	private Boolean active = true;
 	
 	@CreationTimestamp
 	private OffsetDateTime created;
