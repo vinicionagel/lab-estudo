@@ -22,7 +22,7 @@ class PassFlowVerifyServiceTest {
 
     @ParameterizedTest(name = "Invalid pass: {0}")
     @ValueSource(strings = {"aabb12", "1234zz", "1234zz@1", "---@", "@@@[]12", ""})
-    void WhenPassLenghtInvalid_ThenPassValidationException(String pass) {
+    void WhenPassInvalid_ThenPassValidationException(String pass) {
         var passValidationException = assertThrows(
                 PassValidationException.class,
                 () -> passFlowVerifyService.verifyPass(pass)

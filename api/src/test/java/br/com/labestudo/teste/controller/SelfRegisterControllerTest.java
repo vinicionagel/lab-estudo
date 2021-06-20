@@ -1,7 +1,6 @@
 package br.com.labestudo.teste.controller;
 
 import br.com.labestudo.api.controller.SelfRegisterController;
-import br.com.labestudo.api.model.dto.UserDto;
 import br.com.labestudo.api.service.SelfRegisterService;
 import br.com.labestudo.teste.fixture.SelfRegisterFixture;
 import org.junit.jupiter.api.BeforeEach;
