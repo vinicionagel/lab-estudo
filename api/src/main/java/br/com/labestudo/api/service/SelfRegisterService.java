@@ -98,10 +98,13 @@ public class SelfRegisterService extends SelfRegisterable {
 			var date = Optional.ofNullable(selfRegisterUser.getUpdated()).orElse(selfRegister.get().getCreated());
 			if (date.plusHours(accountConfirmationPeriod).isAfter(OffsetDateTime.now())) {
 				userRepository.save(userMapper.toUser(selfRegisterUser));
+				selfRegisterRepository.delete(selfRegisterUser);
+			} else {
+				selfRegisterRepository.delete(selfRegisterUser);
+				throw new SelfRegisterFailedValidationException("selfRegister.userExpired");
 			}
-			selfRegisterRepository.delete(selfRegisterUser);
 		} else {
-			throw new SelfRegisterFailedValidationException();
+			throw new SelfRegisterFailedValidationException("selfRegister.failValidation");
 		}
 	}
 }
