@@ -11,7 +11,7 @@ public class SelfRegisterFixture {
 
     public static UserDto validUserDto() {
         return UserDto.builder().email("vinicionagel@gmail.com")
-                .name("vinicio nagel")
+                .name("vinicio-nagel")
                 .pass("Abc123")
                 .build();
     }
