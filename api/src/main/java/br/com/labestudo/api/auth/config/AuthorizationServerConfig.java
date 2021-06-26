@@ -26,51 +26,51 @@ import javax.sql.DataSource;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-	private final JpaUserDetailsService userDetailsService;
+    private final JpaUserDetailsService userDetailsService;
 
-	private final JwtKeyStoreProperties jwtKeyStoreProperties;
+    private final JwtKeyStoreProperties jwtKeyStoreProperties;
 
-	private DataSource dataSource;
+    private final DataSource dataSource;
 
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.jdbc(dataSource);
-	}
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.jdbc(dataSource);
+    }
 
-	@Override
-	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
-	}
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) {
+        security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
+    }
 
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService)
-				.reuseRefreshTokens(false).accessTokenConverter(jwtAccessTokenConverter())
-				.approvalStore(approvalStore(endpoints.getTokenStore()));
-	}
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService)
+                .reuseRefreshTokens(false).accessTokenConverter(jwtAccessTokenConverter())
+                .approvalStore(approvalStore(endpoints.getTokenStore()));
+    }
 
-	private ApprovalStore approvalStore(TokenStore tokenStore) {
-		var tokenApprovalStore = new TokenApprovalStore();
-		tokenApprovalStore.setTokenStore(tokenStore);
+    private ApprovalStore approvalStore(TokenStore tokenStore) {
+        var tokenApprovalStore = new TokenApprovalStore();
+        tokenApprovalStore.setTokenStore(tokenStore);
 
-		return tokenApprovalStore;
-	}
+        return tokenApprovalStore;
+    }
 
-	@Bean
-	public AccessTokenConverter jwtAccessTokenConverter() {
-		var jksResource = jwtKeyStoreProperties.getPath();
-		var keyPairAlias = jwtKeyStoreProperties.getKeyPairAlias();
-		var keyStorePass = jwtKeyStoreProperties.getKeyStorePass().toCharArray();
+    @Bean
+    public AccessTokenConverter jwtAccessTokenConverter() {
+        var jksResource = jwtKeyStoreProperties.getPath();
+        var keyPairAlias = jwtKeyStoreProperties.getKeyPairAlias();
+        var keyStorePass = jwtKeyStoreProperties.getKeyStorePass().toCharArray();
 
-		var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keyStorePass);
-		var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
+        var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keyStorePass);
+        var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
 
-		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setKeyPair(keyPair);
+        var jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        jwtAccessTokenConverter.setKeyPair(keyPair);
 
-		return jwtAccessTokenConverter;
-	}
+        return jwtAccessTokenConverter;
+    }
 
 }
