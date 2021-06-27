@@ -16,9 +16,9 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Up Conteiner
-      run: docker-compose up -d
     - name: Build with Maven
       run: mvn -B compile --file api/pom.xml
+    - name: Testes
+      run: mvn -B test --file api/pom.xml
     - name: Testes
       run: mvn -B verify --file api/pom.xml
