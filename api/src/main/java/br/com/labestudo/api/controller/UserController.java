@@ -1,6 +1,7 @@
 package br.com.labestudo.api.controller;
 
 import br.com.labestudo.api.auth.service.UserService;
+import br.com.labestudo.api.exception.MessageException;
 import br.com.labestudo.api.model.dto.UserDto;
 import br.com.labestudo.api.model.validation.ValidationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class UserController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated() and @loggedUserValidator.isLoggedUserRequesting(#id)")
-    public void update(@RequestBody @Validated(value = ValidationGroup.Update.class) UserDto userDto, @PathVariable Long id) {
+    public void update(@RequestBody @Validated(value = ValidationGroup.Update.class) UserDto userDto, @PathVariable Long id) throws MessageException {
         userService.update(userDto, id);
     }
 }
