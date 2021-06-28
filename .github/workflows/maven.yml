@@ -21,4 +21,4 @@ jobs:
     - name: Testes
       run: mvn -B test --file api/pom.xml
     - name: Testes integration
-      run: mvn -B verify -DskipTests=true --file api/pom.xml
+      run: mvn -B verify --file api/pom.xml

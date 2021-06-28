@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceUT {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;

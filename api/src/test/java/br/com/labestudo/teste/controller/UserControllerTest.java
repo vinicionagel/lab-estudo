@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class UserControllerIT {
+class UserControllerTest {
 
     public static final String USER_UPDATE_REQUEST = "/user/{id}";
     private MockMvc mockMvc;
