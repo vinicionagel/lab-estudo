@@ -25,6 +25,4 @@ jobs:
     - name: Build with Maven
       run: mvn -B compile --file api/pom.xml
     - name: Testes
-      run: mvn -B test --file api/pom.xml
-    - name: Testes integration
       run: mvn -B verify --file api/pom.xml
