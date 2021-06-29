@@ -84,6 +84,7 @@ class SelfRegisterServiceTest {
         when(parameterRepository.findById("accountConfirmationPeriod")).thenReturn(Optional.of(SelfRegisterFixture.validParameter()));
 
         assertThrows(SelfRegisterFailedValidationException.class, () -> selfRegisterService.validateAccount(new HashDto(selfRegisterUser.getId())));
+        assertTrue(false);
     }
 
 
