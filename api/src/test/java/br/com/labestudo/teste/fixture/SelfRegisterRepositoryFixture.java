@@ -10,7 +10,7 @@ public class SelfRegisterRepositoryFixture {
     private SelfRegisterRepository selfRegisterRepository;
 
     public SelfRegisterRepositoryFixture(SelfRegisterRepository selfRegisterRepository) {
-        this.selfRegisterRepository = selfRegisterRepository;
+        this.selfRegisterRepository = selfRegisterRepository; 
     }
 
     public SelfRegisterUser get() {
