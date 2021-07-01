@@ -18,6 +18,13 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+    - name: Build with Maven
+      run: mvn -B compile --file api/pom.xml
+    - name: Testes
+      run: mvn -B verify --file api/pom.xml
+  sonar:
+    runs-on: ubuntu-latest
+    steps:
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:
@@ -36,7 +43,3 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B verify --file api/pom.xml org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-    - name: Build with Maven
-      run: mvn -B compile --file api/pom.xml
-    - name: Testes
-      run: mvn -B verify --file api/pom.xml
