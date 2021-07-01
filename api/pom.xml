@@ -19,6 +19,9 @@
 		<spring-security-oauth2.version>2.3.7.RELEASE</spring-security-oauth2.version>
 		<spring-security-jwt.version>1.0.11.RELEASE</spring-security-jwt.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+		<sonar.projectKey>vinicionagel_lab-estudo</sonar.projectKey>
+		<sonar.organization>vinicionagel</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
