@@ -1,5 +1,6 @@
 package br.com.labestudo.teste.it;
 
+import br.com.labestudo.api.auth.repository.UserRepository;
 import br.com.labestudo.api.controller.SelfRegisterController;
 import br.com.labestudo.api.exception.ApiExceptionHandler;
 import br.com.labestudo.api.model.dto.HashDto;
@@ -31,6 +32,9 @@ class SelfRegisterIT extends ApiApplicationIT {
     private SelfRegisterRepositoryFixture selfRegisterRepositoryFixture;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private SelfRegisterController selfRegisterController;
 
     @Autowired
@@ -54,10 +58,26 @@ class SelfRegisterIT extends ApiApplicationIT {
     @BeforeEach
     public void initTest() {
         selfRegisterRepositoryFixture.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     void whenPUTIsCalledThenASelfRegisterUserIsCreated() throws Exception {
+        // given
+        var userDto = SelfRegisterFixture.validUserDto();
+        // then
+        mockMvc.perform(put(SELF_REGISTER_API_URL_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userDto)))
+                .andExpect(status().isCreated());
+
+        List<SelfRegisterUser> all = selfRegisterRepository.findAll();
+        Assertions.assertThat(all).isNotEmpty();
+    }
+
+    @Test
+    void whenPUTIsCalledThenAWithASelfRegisterUserIsUpdate() throws Exception {
+        var selfRegistredUser = selfRegisterRepositoryFixture.get();
         // given
         var userDto = SelfRegisterFixture.validUserDto();
         // then
