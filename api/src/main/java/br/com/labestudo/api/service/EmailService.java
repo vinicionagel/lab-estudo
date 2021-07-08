@@ -2,7 +2,6 @@ package br.com.labestudo.api.service;
 
 import br.com.labestudo.api.model.dto.EmailDto;
 import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

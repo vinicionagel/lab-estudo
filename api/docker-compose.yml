@@ -2,15 +2,15 @@ version: "3"
 services:
   postgres:
     image: postgres:latest
-    container_name: lab-api-test-db
+    container_name: test-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: api-db
+      POSTGRES_DB: test
     networks:
-      - production-network
+      - test-network
     ports:
-      - "5432:5432"
+      - "5433:5432"
 networks:
-  production-network:
+  test-network:
     driver: bridge
