@@ -11,7 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @ActiveProfiles("test")
 public abstract class ApiApplicationIT {
 
-    public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:13.1")
+    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13.1")
             .withUsername("test")
             .withPassword("test")
             .withDatabaseName("test");
