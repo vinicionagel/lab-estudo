@@ -9,6 +9,6 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Container image
-        run: docker build -t vinitest:latest .
+        run: docker build --file api/Dockerfile -t vinitest:latest .
       - name: Publish Docker image
         run: docker push vinitest
