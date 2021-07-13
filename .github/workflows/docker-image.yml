@@ -9,12 +9,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get release version
         id: get_version
-        run: echo 'batata'
+        run: echo 'bora'
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: vinitest/api
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{secrets.DOCKER_PASSWORD}}
-          tags: "latest,${{ env.RELEASE_VERSION }}"
+          tags: "latest"
           buildoptions: "--compress --force-rm"
