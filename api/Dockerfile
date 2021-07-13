@@ -1,10 +1,15 @@
+#
+# Build stage
+#
+FROM maven:3.6.0-jdk-11-slim AS build
+COPY src /home/api/src
+COPY pom.xml /home/api
+RUN mvn -f /home/api/pom.xml clean package
+
+#
+# Package stage
+#
 FROM adoptopenjdk:11-jre
-
-ENV API_HOME /usr/local/api
-ENV PATH $API_HOME:$PATH
-WORKDIR $API_HOME
-
-ADD /home/runner/work/lab-estudo/lab-estudo/api/target/*.jar ./api.jar
-
+COPY --from=build /home/api/target/*.jar /usr/local/lib/app.jar
 EXPOSE 8080
-CMD ["java", "-jar", "-Dspring.profiles.active=prod","api.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/app.jar"]
