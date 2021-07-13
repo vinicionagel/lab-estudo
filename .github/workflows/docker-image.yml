@@ -7,11 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get release version
+        id: get_version
+        env:
+          RELEASE_VERSION: `date +%F-%I-%M`
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: vinitest/api
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{secrets.DOCKER_PASSWORD}}
-          tags: "latest,test"
+          tags: "latest,${{ env.RELEASE_VERSION }}"
           buildoptions: "--compress --force-rm"
