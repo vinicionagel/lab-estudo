@@ -19,11 +19,11 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
     - name: Build
-      run: mvn -B compile --file api/pom.xml
+      run: mvn -B compile --file pom.xml
     - name: Unit Testes
-      run: mvn -B test --file api/pom.xml
+      run: mvn -B test --file pom.xml
     - name: Integration testes
-      run: mvn -B failsafe:integration-test --file api/pom.xml
+      run: mvn -B failsafe:integration-test --file pom.xml
   sonar:
     runs-on: ubuntu-latest
     steps:
@@ -56,4 +56,4 @@ jobs:
       env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn -B verify --file api/pom.xml org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+      run: mvn -B verify --file pom.xml org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
