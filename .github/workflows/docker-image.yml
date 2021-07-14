@@ -11,4 +11,4 @@ jobs:
       - name: Build Container image
         run: docker build --file api/Dockerfile -t vinitest:latest .
       - name: Publish Docker image
-        run: docker push vinitest:latest
+        run: docker push vinicionagel/vinitest:latest
