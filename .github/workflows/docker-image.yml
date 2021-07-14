@@ -7,8 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Container image
-        run: docker build --file api/Dockerfile -t vinitest:latest .
+        run: docker build --file api/Dockerfile -t vinicionagel/vinitest:latest .
       - name: Publish Docker image
         run: docker push vinicionagel/vinitest:latest
