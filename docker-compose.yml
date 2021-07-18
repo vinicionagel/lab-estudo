@@ -11,6 +11,15 @@ services:
       - production-network
     ports:
       - "5432:5432"
+  api:
+    image: vinicionagel/vinitest:latest
+    container_name: lab-api
+    networks:
+      - production-network
+    environment:
+      POSTGRES_URL: "lab-api-db"
+    ports:
+      - "8080:8080"
 networks:
   production-network:
     driver: bridge
