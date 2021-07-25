@@ -12,11 +12,15 @@ public interface UserMapper {
 
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
+	UserDto toUserDto(User user);
+
 	User toUser(UserDto userDto);
 
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "created", ignore = true)
 	@Mapping(target = "updated", ignore = true)
 	User toUser(SelfRegisterUser selfRegisterUser);
+
+
 
 }

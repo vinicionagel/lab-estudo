@@ -19,7 +19,7 @@ public class LoggedUserValidator {
     public boolean isLoggedUserRequesting(Long id) {
         Optional<User> optUser = userRepository.findById(id);
         String loggedUserEmail = optUser.map(User::getEmail).orElse("");
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return Objects.equals(userDetails.getUsername(), loggedUserEmail);
     }
 }

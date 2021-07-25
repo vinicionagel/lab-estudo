@@ -1,7 +1,8 @@
-package br.com.labestudo.teste.fixture;
+package br.com.labestudo.teste.fixture.repository;
 
 import br.com.labestudo.api.model.entity.SelfRegisterUser;
 import br.com.labestudo.api.repository.SelfRegisterRepository;
+import br.com.labestudo.teste.fixture.SelfRegisterFixture;
 import org.springframework.stereotype.Component;
 
 @Component

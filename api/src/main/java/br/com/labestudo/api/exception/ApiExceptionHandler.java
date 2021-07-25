@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -49,6 +50,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         var errorsDto = new ErrorsDto();
         errorsDto.setErrors(Collections.singletonList(new ErrorDto(message)));
         return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAcessDeninedException(AccessDeniedException ex, WebRequest request) {
+        var errorsDto = new ErrorsDto();
+        return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
     @ExceptionHandler(MessagesException.class)

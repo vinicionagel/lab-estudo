@@ -7,13 +7,12 @@ import br.com.labestudo.api.model.dto.HashDto;
 import br.com.labestudo.api.model.entity.SelfRegisterUser;
 import br.com.labestudo.api.repository.SelfRegisterRepository;
 import br.com.labestudo.teste.fixture.SelfRegisterFixture;
-import br.com.labestudo.teste.fixture.SelfRegisterRepositoryFixture;
+import br.com.labestudo.teste.fixture.repository.SelfRegisterRepositoryFixture;
 import br.com.labestudo.teste.util.ApiApplicationIT;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class SelfRegisterIT extends ApiApplicationIT {
+class SelfRegisterControllerIT extends ApiApplicationIT {
 
     @Autowired
     private SelfRegisterRepositoryFixture selfRegisterRepositoryFixture;
@@ -39,9 +38,6 @@ class SelfRegisterIT extends ApiApplicationIT {
 
     @Autowired
     private SelfRegisterRepository selfRegisterRepository;
-
-    @Autowired
-    private MessageSource messageSource;
 
     private static final String SELF_REGISTER_API_URL_PATH = "/selfregister";
 
