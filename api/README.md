@@ -21,3 +21,15 @@ keytool -export -rfc -alias api -keystore api.jks -file api-cert.pem
 ```
 openssl x509 -pubkey -noout -in api-cert.pem > api-pkey.pem
 ``` 
+
+## Para testes de integração rodar o seguinte comando:
+
+```
+mvn -B failsafe:integration-test --file api/pom.xml
+```
+
+## Para testes unitários
+
+```
+mvn -B test --file api/pom.xml
+```
