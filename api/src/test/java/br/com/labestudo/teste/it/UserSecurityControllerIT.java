@@ -1,6 +1,7 @@
 package br.com.labestudo.teste.it;
 
 import br.com.labestudo.api.auth.model.entity.User;
+import br.com.labestudo.api.auth.repository.UserRepository;
 import br.com.labestudo.api.model.dto.UserDto;
 import br.com.labestudo.api.model.entity.SelfRegisterUser;
 import br.com.labestudo.api.model.mapper.UserMapper;
@@ -34,6 +35,9 @@ class UserSecurityControllerIT extends ApiApplicationIT {
     private WebApplicationContext webApplicationContext;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private UserMapper userMapper;
 
 
@@ -61,8 +65,7 @@ class UserSecurityControllerIT extends ApiApplicationIT {
                 .content(asJsonString(userDto)))
                 .andExpect(status().isNoContent());
 
-//        List<User> all = ;
-//        Assertions.assertThat(all).isNotEmpty();
+        Assertions.assertThat(userRepository.findById(user.getId()).orElseThrow().getName()).isEqualTo(userDto.getName());
     }
 
     @Test
