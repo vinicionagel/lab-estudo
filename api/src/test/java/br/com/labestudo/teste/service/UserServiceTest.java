@@ -40,7 +40,6 @@ class UserServiceTest {
         User userReturn = userMapperInjection.toUser(userDto);
 
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(userReturn));
-        when(userRepository.save(userReturn)).thenReturn(userReturn);
 
         assertDoesNotThrow(() -> userService.update(userDto, 1L));
     }
