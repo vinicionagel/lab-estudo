@@ -23,7 +23,20 @@ services:
       - POSTGRES_USER
       - POSTGRES_PASSWORD 
       - MAIL_USER 
-      - MAIL_PASS 
+      - MAIL_PASS
+  minio:
+    image: minio/minio
+    container_name: minios
+    networks:
+      - production-network
+    ports:
+      - "9000:9000"
+    environment:
+      - "MINIO_ACCESS_KEY=minio"
+      - "MINIO_SECRET_KEY=minio123"
+    command: server /data
+    volumes:
+      - ./minio-data:/data
 networks:
   production-network:
     driver: bridge
