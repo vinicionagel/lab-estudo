@@ -60,5 +60,7 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Run tests with Maven
-        run: mvn compile failsafe:integration-test --file api/pom.xml
+      - name: package
+        run: mvn package -DskipTests --file api/pom.xml
+      - name: Run integration testes
+        run: failsafe:integration-test --file api/pom.xml
