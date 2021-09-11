@@ -63,4 +63,4 @@ jobs:
       - name: package
         run: mvn package -DskipTests --file api/pom.xml
       - name: Run integration testes
-        run: failsafe:integration-test --file api/pom.xml
+        run: mvn failsafe:integration-test --file api/pom.xml
