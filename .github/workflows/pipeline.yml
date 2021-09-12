@@ -43,7 +43,7 @@ jobs:
       - name: Run tests with Maven
         run: mvn test --file api/pom.xml
   integration-test:
-    needs: unit-test
+    needs: compile
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
