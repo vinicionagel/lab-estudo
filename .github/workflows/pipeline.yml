@@ -65,7 +65,7 @@ jobs:
       - name: Run integration testes
         run: mvn failsafe:integration-test --file api/pom.xml
   push-to-registry:
-    needs: unit-test
+    needs: [unit-test, integration-test]
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
