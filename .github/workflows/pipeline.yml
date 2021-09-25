@@ -43,7 +43,7 @@ jobs:
       - name: Run tests with Maven
         run: mvn test --file api/pom.xml
   integration-test:
-    needs: unit-test
+    needs: compile
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +65,7 @@ jobs:
       - name: Run integration testes
         run: mvn failsafe:integration-test --file api/pom.xml
   sonar:
+    needs: [unit-test, integration-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -92,7 +93,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} --file api/pom.xml
   push-to-registry:
-    needs: unit-test
+    needs: sonar
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
