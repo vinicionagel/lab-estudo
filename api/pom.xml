@@ -24,8 +24,7 @@
         <sonar.organization>8ee08276-6723-413b-89c9-2fff18bbf9d0</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<jacoco.version>0.8.7</jacoco.version>
-		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.java.coveragePlugin>sonar-jacoco</sonar.java.coveragePlugin>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.language>java</sonar.language>
     </properties>
