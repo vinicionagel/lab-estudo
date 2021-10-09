@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   compile:
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - name: compile application
@@ -24,7 +23,6 @@ jobs:
         run: mvn clean compile --file api/pom.xml
   unit-test:
     needs: compile
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - name: run unit tests
@@ -44,7 +42,6 @@ jobs:
         run: mvn test --file api/pom.xml
   integration-test:
     needs: compile
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - name: run integration tests
@@ -64,9 +61,37 @@ jobs:
         run: mvn package -DskipTests --file api/pom.xml
       - name: Run integration testes
         run: mvn failsafe:integration-test --file api/pom.xml
-  push-to-registry:
+  sonar:
     needs: [unit-test, integration-test]
-    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} --file api/pom.xml
+  push-to-registry:
+    needs: sonar
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -94,4 +119,4 @@ jobs:
         with:
           push: true
           tags: labestudo/api
-          context: api
+          context: api 
