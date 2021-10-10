@@ -3,6 +3,8 @@ package br.com.labestudo.api.controller;
 import br.com.labestudo.api.auth.service.UserService;
 import br.com.labestudo.api.model.dto.UserDto;
 import br.com.labestudo.api.model.validation.ValidationGroup;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "Usuário", description = "Usuário Descrição")
 @RestController()
 @RequestMapping("/user")
 public class UserController {
@@ -21,6 +24,7 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Buscar")
     public ResponseEntity<String> find() {
         return ResponseEntity.ok("Hello Vini v4");
     }
