@@ -33,3 +33,6 @@ mvn -B failsafe:integration-test --file api/pom.xml
 ```
 mvn -B test --file api/pom.xml
 ```
+
+## Documentação
+* http://localhost:8080/swagger-ui.html

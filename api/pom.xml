@@ -27,6 +27,7 @@
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.language>java</sonar.language>
+        <springdoc-openapi.version>1.5.11</springdoc-openapi.version>
     </properties>
 
     <dependencies>
@@ -131,8 +132,14 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.5.10</version>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-security</artifactId>-->
+<!--            <version>${springdoc-openapi.version}</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

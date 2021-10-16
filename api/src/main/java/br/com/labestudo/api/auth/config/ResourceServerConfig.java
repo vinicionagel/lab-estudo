@@ -37,7 +37,18 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+        http
+//                    .authorizeRequests()
+//                    .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+//                    .anyRequest()
+//                    .authenticated()
+//                .and()
+                    .csrf().disable()
+                    .cors()
+                .and()
+                    .oauth2ResourceServer()
+                    .jwt()
+                    .jwtAuthenticationConverter(jwtAuthenticationConverter());
     }
 
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
