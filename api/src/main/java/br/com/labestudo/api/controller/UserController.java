@@ -29,11 +29,6 @@ public class UserController {
         return ResponseEntity.ok("Hello Vini v4");
     }
 
-    @PutMapping
-    public ResponseEntity<String> add(@RequestBody @Valid UserDto userDto) {
-        return ResponseEntity.ok(userDto.getName());
-    }
-
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("isAuthenticated() and @loggedUserValidator.isLoggedUserRequesting(#id)")

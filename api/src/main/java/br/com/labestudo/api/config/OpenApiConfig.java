@@ -6,11 +6,15 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.*;
 import org.springdoc.core.GroupedOpenApi;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
+
+    @Value("${application.openapi.security.tokenUrl}")
+    private String tokenUrl;
 
     @Bean
     public OpenAPI openApi() {
@@ -26,7 +30,7 @@ public class OpenApiConfig {
                                     .type(SecurityScheme.Type.OAUTH2)
                                     .flows(new OAuthFlows()
                                             .password(new OAuthFlow()
-                                                    .tokenUrl("http://localhost:8080/oauth/token")
+                                                    .tokenUrl(tokenUrl)
                                                     .scopes(new Scopes()
                                                             .addString("READ", "Escopo de leitura")
                                                             .addString("WRITE", "Escopo de escrita"))))));
