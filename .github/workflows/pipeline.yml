@@ -134,4 +134,4 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.EC2_SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Connect SSH and Start deploy
-        run: ssh ${{ secrets.EC2_SSH_HOST }} "cd api && docker-compose pull && docker-compose up -d"
+        run: ssh ec2-user@${{ secrets.EC2_SSH_HOST }} "cd api && docker-compose pull && docker-compose up -d"
