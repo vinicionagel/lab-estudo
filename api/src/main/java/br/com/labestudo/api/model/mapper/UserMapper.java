@@ -19,4 +19,5 @@ public interface UserMapper {
 	@Mapping(target = "updated", ignore = true)
 	User toUser(SelfRegisterUser selfRegisterUser);
 
+	UserDto toUserDto(User user);
 }
