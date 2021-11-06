@@ -37,3 +37,10 @@ Content-Type: application/json
 
 { "hash":"cf6456d7-6572-4344-a46b-458fff864fa5"}
 
+
+### test self register ok
+POST http://{{url}}/selfregister
+Content-Type: application/json
+
+{ "hash":"420679a2-4119-4784-b640-1a6aaf39e918"}
+

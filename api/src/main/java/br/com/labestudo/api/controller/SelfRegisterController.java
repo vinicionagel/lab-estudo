@@ -1,6 +1,7 @@
 package br.com.labestudo.api.controller;
 
 import br.com.labestudo.api.exception.PassValidationException;
+import br.com.labestudo.api.exception.PathConfigurableException;
 import br.com.labestudo.api.exception.SelfRegisterFailedValidationException;
 import br.com.labestudo.api.exception.UserRegisteredException;
 import br.com.labestudo.api.model.dto.HashDto;
@@ -30,7 +31,7 @@ public class SelfRegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<String> validateAccount(@RequestBody @Valid HashDto hash) throws SelfRegisterFailedValidationException {
+    public ResponseEntity<String> validateAccount(@RequestBody @Valid HashDto hash) throws SelfRegisterFailedValidationException, PathConfigurableException {
         selfRegisterService.validateAccount(hash);
         return ResponseEntity.ok().build();
     }

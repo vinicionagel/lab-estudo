@@ -2,6 +2,7 @@ package br.com.labestudo.api.service;
 
 import br.com.labestudo.api.auth.repository.UserRepository;
 import br.com.labestudo.api.exception.PassValidationException;
+import br.com.labestudo.api.exception.PathConfigurableException;
 import br.com.labestudo.api.exception.SelfRegisterFailedValidationException;
 import br.com.labestudo.api.exception.UserRegisteredException;
 import br.com.labestudo.api.model.dto.EmailDto;
@@ -13,13 +14,16 @@ import br.com.labestudo.api.model.mapper.SelfRegisterUserMapper;
 import br.com.labestudo.api.model.mapper.UserMapper;
 import br.com.labestudo.api.repository.ParameterRepository;
 import br.com.labestudo.api.repository.SelfRegisterRepository;
+import br.com.labestudo.api.service.file.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.Optional;
@@ -47,6 +51,8 @@ public class SelfRegisterService extends SelfRegisterable {
 	private final MessageSource messageSource;
 
 	private final UserMapper userMapper;
+
+	private final FileService fileService;
 
 	@Override
 	protected void verifyIfRegistered(String email) throws UserRegisteredException {
@@ -90,14 +96,15 @@ public class SelfRegisterService extends SelfRegisterable {
 				.build());
 	}
 
-	public void validateAccount(HashDto hash) throws SelfRegisterFailedValidationException {
+	@Transactional(rollbackFor = IOException.class)
+	public void validateAccount(HashDto hash) throws SelfRegisterFailedValidationException, PathConfigurableException {
 		Optional<SelfRegisterUser> selfRegister = selfRegisterRepository.findById(hash.getHash());
 		if (selfRegister.isPresent()) {
 			var accountConfirmationPeriod = parameterRepository.findById("accountConfirmationPeriod").map(Parameter::getValue).map(Integer::valueOf).orElse(12);
 			var selfRegisterUser = selfRegister.get();
 			var date = Optional.ofNullable(selfRegisterUser.getUpdated()).orElse(selfRegister.get().getCreated());
 			if (date.plusHours(accountConfirmationPeriod).isAfter(OffsetDateTime.now())) {
-				userRepository.save(userMapper.toUser(selfRegisterUser));
+				fileService.configurePath(userRepository.save(userMapper.toUser(selfRegisterUser)).getId());
 				selfRegisterRepository.delete(selfRegisterUser);
 			} else {
 				selfRegisterRepository.delete(selfRegisterUser);
