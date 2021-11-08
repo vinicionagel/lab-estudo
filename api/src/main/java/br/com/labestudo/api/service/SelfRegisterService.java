@@ -50,7 +50,7 @@ public class SelfRegisterService extends SelfRegisterable {
 
 	private final MessageSource messageSource;
 
-	private final UserMapper userMapper;
+	private final UserMapper userMapper = UserMapper.INSTANCE;
 
 	private final FileService fileService;
 
