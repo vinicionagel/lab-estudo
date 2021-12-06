@@ -5,6 +5,7 @@ import br.com.labestudo.api.exception.ApiExceptionHandler;
 import br.com.labestudo.api.exception.SelfRegisterFailedValidationException;
 import br.com.labestudo.api.model.dto.HashDto;
 import br.com.labestudo.api.service.SelfRegisterService;
+import br.com.labestudo.api.service.file.FileService;
 import br.com.labestudo.teste.fixture.SelfRegisterFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,9 @@ class SelfRegisterControllerTest {
 
     @Mock
     private MessageSource messageSource;
+
+    @Mock
+    private FileService fileService;
 
     @BeforeEach
     void setUp() {

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +51,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         var message = messageSource.getMessage(ex.getKey(), ex.getArgs(), LocaleContextHolder.getLocale());
         var errorsDto = new ErrorsDto();
         errorsDto.setErrors(Collections.singletonList(new ErrorDto(message)));
+        return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<Object> handleMessagesIOException(IOException ex, WebRequest request) {
+//        var message = messageSource.getMessage(ex.getKey(), ex.getArgs(), LocaleContextHolder.getLocale());
+        var errorsDto = new ErrorsDto();
+//        errorsDto.setErrors(Collections.singletonList(new ErrorDto(message)));
         return handleExceptionInternal(ex, errorsDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
