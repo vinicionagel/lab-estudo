@@ -100,8 +100,8 @@ class SelfRegisterServiceTest {
 
     @Test
     void whenInformedNonExistentHashThenAnExceotionBeThrown() {
-        when(selfRegisterRepository.findById("abacate")).thenReturn(Optional.empty());
-        assertThrows(SelfRegisterFailedValidationException.class, () -> selfRegisterService.validateAccount(new HashDto("abacate")));
+        when(selfRegisterRepository.findById("foo")).thenReturn(Optional.empty());
+        assertThrows(SelfRegisterFailedValidationException.class, () -> selfRegisterService.validateAccount(new HashDto("foo")));
     }
 
     @Test
