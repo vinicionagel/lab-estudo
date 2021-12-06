@@ -2,6 +2,7 @@ package br.com.labestudo.teste.service;
 
 import br.com.labestudo.api.auth.model.entity.User;
 import br.com.labestudo.api.auth.repository.UserRepository;
+import br.com.labestudo.api.exception.PathConfigurableException;
 import br.com.labestudo.api.exception.SelfRegisterFailedValidationException;
 import br.com.labestudo.api.exception.UserRegisteredException;
 import br.com.labestudo.api.model.dto.HashDto;
@@ -11,6 +12,7 @@ import br.com.labestudo.api.model.mapper.UserMapper;
 import br.com.labestudo.api.repository.ParameterRepository;
 import br.com.labestudo.api.repository.SelfRegisterRepository;
 import br.com.labestudo.api.service.SelfRegisterService;
+import br.com.labestudo.api.service.file.FileService;
 import br.com.labestudo.teste.fixture.SelfRegisterFixture;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +37,9 @@ class SelfRegisterServiceTest {
 
     @Mock
     private ParameterRepository parameterRepository;
+
+    @Mock
+    private FileService fileService;
 
     @InjectMocks
     private SelfRegisterService selfRegisterService;
@@ -59,6 +65,8 @@ class SelfRegisterServiceTest {
 
         when(selfRegisterRepository.findById(selfRegisterUser.getId())).thenReturn(Optional.of(selfRegisterUser));
 
+        userMapperInjection = UserMapper.INSTANCE;
+
         User user = userMapperInjection.toUser(selfRegisterUser);
 
         when(parameterRepository.findById("accountConfirmationPeriod")).thenReturn(Optional.of(SelfRegisterFixture.validParameter()));
@@ -66,6 +74,27 @@ class SelfRegisterServiceTest {
         when(userRepository.save(userMapperInjection.toUser(selfRegisterUser))).thenReturn(user);
 
         assertDoesNotThrow(() -> selfRegisterService.validateAccount(new HashDto(selfRegisterUser.getId())));
+    }
+
+    @Test
+    void whenInformedValidHashThenExceptionInConfigurePath() throws PathConfigurableException {
+        SelfRegisterUser selfRegisterUser = SelfRegisterFixture.validSelfRegisterUser();
+
+        when(selfRegisterRepository.findById(selfRegisterUser.getId())).thenReturn(Optional.of(selfRegisterUser));
+
+        userMapperInjection = UserMapper.INSTANCE;
+
+        User user = userMapperInjection.toUser(selfRegisterUser);
+
+        when(parameterRepository.findById("accountConfirmationPeriod")).thenReturn(Optional.of(SelfRegisterFixture.validParameter()));
+
+        user.setId(1L);
+
+        when(userRepository.save(userMapperInjection.toUser(selfRegisterUser))).thenReturn(user);
+
+        doThrow(new PathConfigurableException()).when(fileService).configurePath(1L);
+
+        assertThrows(PathConfigurableException.class, () -> selfRegisterService.validateAccount(new HashDto(selfRegisterUser.getId())));
     }
 
 
